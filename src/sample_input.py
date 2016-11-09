@@ -27,7 +27,7 @@ samples = [['Sample input file']]  # TODO: better header line
 for i in range(1, reads+1):
 	segments = random.randint(min, max)
 	for j in range(1, segments+1):
-		val = (a * (e ** (b * j)) + c) * (random.uniform((1-dev), (1+dev)))
+		val = (a * (math.exp(b * j)) + c) * (random.uniform((1-dev), (1+dev)))
 		samples.append([])
 		samples[i].insert(j, val)
 
