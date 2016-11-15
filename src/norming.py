@@ -89,7 +89,22 @@ def main():
 
     [A,B,C] = betterNorm(x_values,y_values)
 
-    print A,B,C
+    reads = len(shellWidths)
+    
+    output = "Sample output file\n"
+
+    for i in range(reads):
+        line = "sample" + str(i+1) + ","
+        shellLen = len(shellWidths[i])
+        divideBy = [function(x,A,B,C) for x in range(shellLen)]
+        normedWidths = [x/y for x, y in zip(shellWidths[i], divideBy)]
+        line += ','.join(map(str,normedWidths))
+        line += "\n"
+        output += line
+
+    print output[:-1]
+    
+
 
     domain = numpy.arange(0,max(x_values),.1)
     output = [function(x,A,B,C) for x in domain]
