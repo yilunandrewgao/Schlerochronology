@@ -4,14 +4,30 @@ import java.util.HashMap;
 
 public class Main {
 
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        ArrayList<Read> reads = new ArrayList<>();
-        ArrayList<Kmer> kmers = new ArrayList<>();
-        //HashMap<ArrayList<Double>, ArrayList<Double>> kmers = new HashMap<>();
-        String header = in.nextLine();
-        int shortestRead = (int) Double.POSITIVE_INFINITY;
+    private static Scanner in;
+    private static ArrayList<Read> reads;
+    private static ArrayList<Kmer> kmers;
+    private static String header;
+    private static int shortestRead;
 
+    public static void main(String[] args) {
+        in = new Scanner(System.in);
+        reads = new ArrayList<>();
+        kmers = new ArrayList<>();
+        header = in.nextLine();
+        shortestRead = (int) Double.POSITIVE_INFINITY;
+
+        getReads();
+        buildKmers(shortestRead);
+
+        //DEBUG
+        for(Kmer k: kmers){
+            System.out.println(k.toString());
+        }
+
+    }
+
+    private static void getReads(){
         /*
          * This while loop reads through the input and turns each line into a Read object
          * It also tracks the shortest read, which is later used as the length of K for the Kmers
@@ -29,14 +45,9 @@ public class Main {
 
             reads.add(currentRead);
         }
+    }
 
-        /*//DEBUG
-        for(Read r: reads){
-            System.out.println(r.toString());
-        }*/
-
-        System.out.println(shortestRead);
-
+    private static void buildKmers(int k){
         /*
          * This for loop goes over each read and builds all kmers from it
          * it then checks if the kmer has already been found, and increases its count if it has been
@@ -44,29 +55,19 @@ public class Main {
          */
         for(Read r: reads){
             ArrayList<Double> segments = r.getSegments();
-            //System.out.println(segments.toString());
             int i=0;
-            while((i+shortestRead) <= segments.size()){
-                Kmer currentKmer = new Kmer(segments.subList(i, (i+shortestRead)));
-                //System.out.println(segments.subList(i, i+shortestRead).toString());
+            while((i+k) <= segments.size()){
+                Kmer currentKmer = new Kmer(segments.subList(i, (i+k)));
                 int index = kmers.indexOf(currentKmer);
                 if(index != -1){
-                    //System.out.println("Kmer was previously generated");
                     kmers.get(index).count++;
                     //TODO: calculate multiplicity
                 }
                 else{
-                    //System.out.println("Kmer was not previously generated");
                     kmers.add(currentKmer);
                 }
                 i++;
             }
         }
-
-        //DEBUG
-        for(Kmer k: kmers){
-            System.out.println(k.toString());
-        }
-
     }
 }
