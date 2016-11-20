@@ -31,6 +31,8 @@ for i in range(1, reads+1):
 		samples.append([])
 		samples[i].insert(j, val)
 
+print samples
+
 for k in range(0, reads+1):
 	if k!= 0:
 		line = 'sample' + str(k) + ','
@@ -38,6 +40,6 @@ for k in range(0, reads+1):
 		line = ''
 
 	line += ','.join(map(str, samples[k]))
-	print line
+	# print line
 
 sys.exit(0)
