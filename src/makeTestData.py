@@ -1,21 +1,29 @@
 import math
 import sys
 import random
+import numpy
 
-def getShells(timeline):
+def generateTimeline(length, stddev):
 
-    boolList = []
+    Timeline = []
+
+    for i in range(length):
+        Timeline.append(numpy.random.normal(loc=1,scale=stddev))
+
+    return Timeline
+    
+
+def getShells(timeline, numShells, minLen, maxLen):
 
     shells=[]
 
-    for i in range(len(timeline)+1):
-        if i < len(timeline) + 1 - (min - 1):
-            boolList.append(True)
-        else:
-            boolList.append(False)
-
-    while 1:
-        openIndices = [boolList[i] for i in len(boolList) and boolList[i] = True]
+    for i in range(numShells):
+        shellLen = random.randint(minLen, maxLen)
+        start = random.randint(0,len(timeline))
+        end = start + shellLen
+        shells.append(timeline[start:end])
+    
+    return shells
 
 
 def main():
@@ -24,21 +32,32 @@ def main():
 
     random.seed()
 
-    if len(params) != 4:
+    if len(params) != 6:
         print "Invalid params"
         sys.exit(1)
     else:
-        reads = params[0]
-        min = params[1]
-        max = params[2]
-        numBins = params[3]
+        reads = int(params[1])
+        minLen = int(params[2])
+        maxLen = int(params[3])
+        timelineLen = int(params[4])
+        stddev = float(params[5])
 
 
-    totalLen = 2*reads + max -1
+    timeline = generateTimeline(timelineLen, stddev)
+    shells = getShells(timeline, reads, minLen, maxLen)
 
-    timeline = []
 
-    for i in range(totalLen):
-        timeline.append(random.uniform(1,numBins+1))
+    output = "Sample output file\n"
 
+    for i in range(len(shells)):
+        line = "sample" + str(i+1) + ","
+        shellLen = len(shells[i])
+        read = [shells[i][j] for j in range(shellLen)]
+        line += ','.join(map(str,read))
+        line += "\n"
+        output += line
+
+    print output[:-1]
+
+main()
     
