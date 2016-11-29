@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="CIS422_Project_2_jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/CIS422_Project_2_jar/CIS422 Project 2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/CIS422_Project_2_jar/jgrapht-core-1.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
