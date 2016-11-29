@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Class-Path: jgrapht-core-1.0.0.jar
-Main-Class: Main
-

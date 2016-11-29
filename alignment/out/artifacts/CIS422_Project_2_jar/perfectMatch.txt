@@ -1,5 +1,0 @@
-Header Line
-Sample1,1,2,3,4,5,6,7
-Sample2,2,3,4,5,6,7,8
-Sample3,3,4,5,6,7,8,9
-Sample4,4,5,6,7,8,9,10

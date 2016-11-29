@@ -17,8 +17,8 @@ public class Main {
         shortestRead = (int) Double.POSITIVE_INFINITY;
 
         getReads();
-        buildKmers(shortestRead-2); //FIXME can't use k=shortest read because then shortest read has to be completely contained
-        //buildKmers(5);
+        //buildKmers(shortestRead-2); //FIXME can't use k=shortest read because then shortest read has to be completely contained
+        buildKmers(5); //4 is the shortest size that this algorithm works with but 5 is better
 
         DBGraph dbg = new DBGraph(kmers);
 
@@ -37,7 +37,7 @@ public class Main {
 
         }
         else {
-            //TODO: this method only works under perfect conditions (a single alignmnet exists in the data)
+            //TODO: this method only works under perfect conditions (a single alignment exists in the data)
             System.out.println("No complete alignment could be made with this dataset");
         }
 
@@ -47,11 +47,18 @@ public class Main {
         /*
          * This while loop reads through the input and turns each line into a Read object
          * It also tracks the shortest read, which is later used as the length of K for the Kmers
+         * Note: most of the length-1 are because the first index is the sample name not a segment
          */
+        int sampleNumber = 0;
         while(in.hasNext()){
             String line = in.nextLine();
             String[] parts = line.split(",");
 
+            //Samples have to have at least 5 segments for the algorithm to work
+            if (parts.length-1 < 5) {
+                //System.out.println("Sample " + sampleNumber + " was too short, skipping");
+                return;
+            }
             if((parts.length-1) < shortestRead) shortestRead = (parts.length-1); //used to determine what K is
 
             Read currentRead = new Read(parts[0]);
@@ -60,6 +67,7 @@ public class Main {
             }
 
             reads.add(currentRead);
+            sampleNumber++;
         }
     }
 
