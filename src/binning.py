@@ -41,6 +41,7 @@ def main():
     print output[:-1]
 
     plt.hist(allWidths, equalBinning(allWidths,16))
-    plt.show()
+    #plt.show()
+    plt.savefig('binnedFig.png')
 
 main()

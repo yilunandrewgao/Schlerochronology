@@ -110,7 +110,8 @@ def main():
     output = [function(x,A,B,C) for x in domain]
 
     plt.plot(x_values,y_values, 'ro', domain, output)
-    plt.show()
+    #plt.show()
+    plt.savefig('normedFig.png')
 
     
 
