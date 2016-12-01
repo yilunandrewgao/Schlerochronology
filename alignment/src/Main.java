@@ -26,7 +26,8 @@ public class Main {
          * This conditional + loop makes sure a euler path can be made,
          * then finds the indices of each sample in the alignment
          */
-        if (dbg.makeCircular()){
+        int flag = dbg.makeCircular();
+        /*if (flag==0){
             //Now we can find a euler circuit
             System.out.println("Graph has been made circular");
             System.out.println(dbg.getAlignment());
@@ -36,10 +37,51 @@ public class Main {
             }
 
         }
-        else {
+        else{
+            System.out.println(flag);
+        }*/
+
+        switch (flag){
+            case 0:
+                //Now we can find a euler circuit
+                System.out.println("Graph has been made circular");
+                System.out.println(dbg.getAlignment());
+
+                for(Read r: reads){
+                    System.out.println(r.getID() + " Offset: " + dbg.getOffset(r));
+                }
+                break;
+            case 1:
+                System.out.println("Too many potential starts found in dataset");
+                break;
+            case 2:
+                System.out.println("Too many potential ends found in dataset");
+                break;
+            case 3:
+                System.out.println("Vertices has in degree/out degree difference >1");
+                break;
+            case 4:
+                System.out.println("No guaranteed start vertex found");
+                break;
+            case 5:
+                System.out.println("No guaranteed end vertex found");
+                break;
+            case 6:
+                System.out.println("Unspecified error");
+                break;
+        }
+
+
+        /*else {
             //TODO: this method only works under perfect conditions (a single alignment exists in the data)
             System.out.println("No complete alignment could be made with this dataset");
-        }
+
+            //FIXME: this part needs to be removed probably
+            System.out.println(dbg.getAlignment());
+            for(Read r: reads){
+                System.out.println(r.getID() + " Offset: " + dbg.getOffset(r));
+            }
+        }*/
 
     }
 
@@ -84,7 +126,7 @@ public class Main {
                 Kmer currentKmer = new Kmer(segments.subList(i, (i+k)));
                 int index = kmers.indexOf(currentKmer);
                 if(index != -1){
-                    kmers.get(index).count++;
+                    //kmers.get(index).count++;
                     //TODO: calculate multiplicity
                     //FIXME: not sure the multi-edge is actually useful for our case; repeats should be exceedingly rare
                 }

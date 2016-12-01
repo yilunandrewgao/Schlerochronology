@@ -44,8 +44,15 @@ public class DBGraph {
      * This function searches for a start vertex and an end vertex, then links them so that a eulerian circuit exists
      * if more than 1 start/end vertex is found returns false
      * if exactly 1 of each is found adds an edge between them and then returns true
+     * 0 if ok
+     * 1 if too many starts
+     * 2 if too many ends
+     * 3 if node is too unbalanced
+     * 4 if no start
+     * 5 if no end
+     * 6 if other
      */
-    public boolean makeCircular(){
+    public int makeCircular(){
         int startVerticesCount = 0;
         int endVerticesCount = 0;
 
@@ -60,18 +67,18 @@ public class DBGraph {
                     startVerticesCount++;
                     startVertex = v;
                     //Found too many possible starts
-                    if (startVerticesCount > 1) return false;
+                    if (startVerticesCount > 1) return 1;
                 }
                 //vertex with more in than out has to be an end point
                 else if(inDeg-outDeg ==1){
                     endVerticesCount++;
                     endVertex = v;
                     //Found too many possible ends
-                    if (endVerticesCount > 1) return false;
+                    if (endVerticesCount > 1) return 2;
                 }
                 //If a vertex has 2 more in or out then there cannot be a euler path
                 else {
-                    return false;
+                    return 3;
                 }
             }
         }
@@ -80,13 +87,19 @@ public class DBGraph {
          * If we didn't find any start/end then there was already a cycle
          * If we didn't find the same number of start/end then there cannot be a path
          */
-        if ((startVerticesCount == 0 && endVerticesCount == 0) || (startVerticesCount == 1 && endVerticesCount == 1)){
+        if ((startVerticesCount == 1 && endVerticesCount == 1)){
             //Add an edge going back from the end to the start so that there's a loop
             graph.addEdge(endVertex, startVertex);
-            return true;
+            return 0;
         }
-        else {
-            return false;
+        else if (startVerticesCount == 0){
+            return 4;
+        }
+        else if (endVerticesCount == 0){
+            return 5;
+        }
+        else{
+            return 6;
         }
 
     }

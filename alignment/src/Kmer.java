@@ -1,14 +1,14 @@
 import java.util.List;
 
 public class Kmer {
-    public int count; //Times Kmer has been counted
-    public int multiplicity; //Calculated after all Kmers are set
+   // public int count; //Times Kmer has been counted
+    //public int multiplicity; //Calculated after all Kmers are set
     public List<Double> segments; //List of segment lengths in the Kmer
     public int length;
 
     public Kmer(List<Double> s){
-        count = 1;
-        multiplicity = 1;
+        //count = 1;
+        //multiplicity = 1;
         segments = s;
         length = segments.size();
     }
@@ -20,7 +20,7 @@ public class Kmer {
             res += d.toString() + " ";
         }
 
-        res += "Count: " + count + " Multiplicity: " + multiplicity;
+        //res += "Count: " + count + " Multiplicity: " + multiplicity;
 
         return res;
     }
